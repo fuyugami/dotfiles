@@ -1,0 +1,35 @@
+# ============================================
+# GHOSTTY — macOS Development
+# ============================================
+
+# Appearance: always dark
+theme = Catppuccin Mocha
+window-theme = dark
+macos-titlebar-style = native
+
+# Font
+font-family = JetBrains Mono
+font-size = 13
+
+# Clean layout
+window-padding-x = 8
+window-padding-y = 6
+
+# Slightly translucent window background
+background-opacity = 0.75
+
+# macOS keyboard behavior
+macos-option-as-alt = left
+
+# Shell integration
+shell-integration = detect
+
+# Performance and usability
+scrollback-limit = 10000000
+mouse-hide-while-typing = true
+
+# Safety: don't automatically copy selections
+copy-on-select = false
+
+# Desktop notifications from programs (Claude Code, Codex); click focuses the tab
+desktop-notifications = true
