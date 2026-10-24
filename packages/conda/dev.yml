@@ -1,0 +1,11 @@
+# Default Python env (activated automatically via ~/.condarc).
+# Project-specific envs belong in their project repos.
+name: dev
+channels:
+  - conda-forge
+dependencies:
+  - python=3.13
+  - pip
+  - numpy
+  - pandas
+  - ruff

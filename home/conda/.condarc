@@ -1,0 +1,10 @@
+channels:
+  - conda-forge
+mirrored_channels:
+  conda-forge:
+    - https://conda.anaconda.org/conda-forge
+    - https://prefix.dev/conda-forge
+
+default_activation_env: dev
+auto_activate: true
+changeps1: false
