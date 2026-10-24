@@ -1,0 +1,17 @@
+#!/bin/sh
+# tmux status helper: "Load 1.23 | Battery 87%" (macOS + Linux).
+
+case $(uname -s) in
+  Darwin)
+    load=$(/usr/sbin/sysctl -n vm.loadavg 2>/dev/null | awk '{print $2}')
+    battery=$(/usr/bin/pmset -g batt 2>/dev/null | grep -Eo '[0-9]+%' | head -n 1)
+    ;;
+  Linux)
+    load=$(cut -d ' ' -f 1 /proc/loadavg 2>/dev/null)
+    for capacity in /sys/class/power_supply/BAT*/capacity; do
+      [ -r "$capacity" ] && battery="$(cat "$capacity")%" && break
+    done
+    ;;
+esac
+
+printf 'Load %s | Battery %s' "${load:-?}" "${battery:-N/A}"
