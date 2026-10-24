@@ -11,7 +11,7 @@ DOTFILES="$(cd "$(dirname "$0")" && pwd)"
 export DOTFILES
 . "$DOTFILES/setup/lib.sh"
 
-STEPS=(packages link git shell node python go docker agents)
+STEPS=(packages link git shell tmux node python go docker agents)
 
 usage() {
   cat <<USAGE
@@ -22,6 +22,7 @@ Steps (default: all, in this order):
   link       symlink home/* into \$HOME with Stow (backs up existing files)
   git        git identity in ~/.config/git/config.local (untracked)
   shell      zsh as login shell
+  tmux       tmux plugins (resurrect, continuum)
   node       nvm, Node LTS as default, global npm packages (packages/npm.txt)
   python     uv, Miniforge (conda/mamba) and packages/conda/*.yml envs
   go         Go from go.dev + tools from packages/go.txt (GO_UPDATE=1 to upgrade)

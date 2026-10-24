@@ -27,6 +27,14 @@ for tool in $tools; do
   fi
 done
 
+info "tmux plugins"
+if [ -x "$HOME/.local/share/tmux/plugins/tpm/tpm" ]; then
+  ok "tpm, resurrect, continuum"
+else
+  warn "tmux plugins missing: run ./install.sh tmux"
+  problems=$((problems + 1))
+fi
+
 info "Identity"
 if git config --file "$HOME/.config/git/config.local" user.email >/dev/null 2>&1; then
   ok "git identity in ~/.config/git/config.local"
