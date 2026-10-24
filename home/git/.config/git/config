@@ -1,0 +1,28 @@
+# Global git config (macOS + Linux). Identity is NOT tracked: it lives in
+# ~/.config/git/config.local, created by `install.sh git`.
+[include]
+	path = ~/.config/git/config.local
+
+[core]
+	editor = nvim
+	autocrlf = input
+	# Global ignore file: ~/.config/git/ignore (git's default location)
+
+[init]
+	defaultBranch = main
+
+[push]
+	autoSetupRemote = true
+
+[fetch]
+	prune = true
+
+[diff]
+	algorithm = histogram
+	colorMoved = default
+
+[merge]
+	conflictStyle = zdiff3
+
+[rerere]
+	enabled = true
