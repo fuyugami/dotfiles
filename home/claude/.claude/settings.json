@@ -1,6 +1,4 @@
 {
-  "model": "opus",
-  "preferredNotifChannel": "ghostty",
   "permissions": {
     "allow": [
       "Bash(git status:*)",
@@ -14,11 +12,13 @@
       "Bash(docker info:*)"
     ]
   },
+  "model": "opus",
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true
+    "typescript-lsp@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": true
   },
   "modelSettings": {
     "claude-opus-5-5": {
@@ -29,5 +29,6 @@
     }
   },
   "theme": "dark",
-  "editorMode": "normal"
+  "editorMode": "normal",
+  "preferredNotifChannel": "ghostty"
 }
