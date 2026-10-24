@@ -1,0 +1,33 @@
+{
+  "model": "opus",
+  "preferredNotifChannel": "ghostty",
+  "permissions": {
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git blame:*)",
+      "Bash(go test:*)",
+      "Bash(go vet:*)",
+      "Bash(docker ps:*)",
+      "Bash(docker info:*)"
+    ]
+  },
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true
+  },
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "high"
+    },
+    "claude-sonnet-5-5": {
+      "effortLevel": "high"
+    }
+  },
+  "theme": "dark",
+  "editorMode": "normal"
+}

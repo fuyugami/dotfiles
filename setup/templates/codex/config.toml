@@ -1,0 +1,14 @@
+# Seed for ~/.codex/config.toml, copied once by `install.sh agents`.
+# Not linked: Codex keeps writing machine-specific state into this file
+# (trusted projects, plugin paths, approved hook hashes).
+model = "gpt-5.6-sol"
+model_reasoning_effort = "high"
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+
+[tui]
+theme = "catppuccin-mocha"
+# Desktop notifications through Ghostty (OSC 9), only when the pane isn't focused.
+notifications = true
+notification_method = "osc9"
+notification_condition = "unfocused"
