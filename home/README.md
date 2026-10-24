@@ -145,7 +145,7 @@ One file: `.config/tmux/tmux.conf`. Reload after editing with `Ctrl+B r` or `mak
 | Titles | `set-titles-string "#S · #W"`: Ghostty tabs show session and window |
 | Passthrough | `allow-passthrough all` lets Claude Code / Codex notifications reach Ghostty from background windows |
 | Navigation | `Ctrl+h/j/k/l` shared with Neovim (smart-splits); change both sides together |
-| Clear screen | `Ctrl+B Ctrl+L` (because plain `Ctrl+L` navigates) |
+| Clear screen | `Ctrl+B Ctrl+L` (because plain `Ctrl+L` navigates); Ghostty sends it on `Cmd+K` |
 | Sessions survive a reboot | resurrect + continuum, see below |
 
 **Common tweaks**
@@ -187,8 +187,8 @@ first one; in other tabs `tmux attach` picks a session no tab shows yet.
 ## Ghostty
 
 `.config/ghostty/config.ghostty` — theme Catppuccin Mocha, JetBrains Mono 13 (bundled with
-Ghostty, no font install needed), 75% background opacity, left Option as Alt, shell
-integration, large scrollback, desktop notifications from programs (used by Claude Code
+Ghostty, no font install needed), 75% background opacity, left Option as Alt, `Cmd+K`
+clearing the screen (also inside tmux), shell integration, large scrollback, desktop notifications from programs (used by Claude Code
 and Codex; on macOS allow Ghostty in System Settings → Notifications). macOS-only keys
 are ignored on Linux.
 

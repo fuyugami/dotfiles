@@ -21,6 +21,10 @@ background-opacity = 0.75
 # macOS keyboard behavior
 macos-option-as-alt = left
 
+# Cmd+K clears the screen: sends Ctrl+B Ctrl+L, tmux's clear binding (plain
+# Ctrl+L moves between panes). Outside tmux it still clears the shell.
+keybind = cmd+k=text:\x02\x0c
+
 # Shell integration
 shell-integration = detect
 

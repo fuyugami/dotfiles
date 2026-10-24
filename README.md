@@ -111,7 +111,7 @@ setup/       one script per install step, plus templates copied once (Codex conf
 | `Ctrl+h/j/k/l` | Move between tmux panes and Neovim splits |
 | `Ctrl+B` `c` | New window in the current directory |
 | `Ctrl+B` `w` / `s` | Pick a window / session |
-| `Ctrl+B` `Ctrl+L` | Clear the screen (plain `Ctrl+L` moves to the right pane) |
+| `Cmd+K` or `Ctrl+B` `Ctrl+L` | Clear the screen (plain `Ctrl+L` moves to the right pane) |
 | `Ctrl+B` `[` → `v` → `y` | Copy mode, select, copy to the system clipboard |
 | `Ctrl+B` `r` | Reload the config |
 | `Ctrl+B` `Ctrl+S` / `Ctrl+R` | Save / restore all sessions now (saving also happens every 10 min) |
