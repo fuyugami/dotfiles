@@ -1,0 +1,12 @@
+.DS_Store
+
+# Machine-local overrides and secrets: git/config.local, ~/.zshrc.local, ...
+*.local
+!home/bin/.local/
+.env
+
+# The global git ignore excludes agent files; this repo tracks them on purpose.
+!.claude/
+!.codex/
+!CLAUDE.md
+!AGENTS.md
