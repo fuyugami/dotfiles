@@ -146,6 +146,7 @@ One file: `.config/tmux/tmux.conf`. Reload after editing with `Ctrl+B r` or `mak
 | Passthrough | `allow-passthrough all` lets Claude Code / Codex notifications reach Ghostty from background windows |
 | Navigation | `Ctrl+h/j/k/l` shared with Neovim (smart-splits); change both sides together |
 | Clear screen | `Ctrl+B Ctrl+L` (because plain `Ctrl+L` navigates) |
+| Sessions survive a reboot | resurrect + continuum, see below |
 
 **Common tweaks**
 
@@ -157,6 +158,31 @@ One file: `.config/tmux/tmux.conf`. Reload after editing with `Ctrl+B r` or `mak
 - Pane navigation on `Alt+h/j/k/l` instead (frees `Ctrl+L` for clearing): change the four
   `bind-key -n C-…` lines to `M-…` **and** the keys in `nvim/…/plugins/smart-splits.lua`.
 - Different theme: replace the hex colors in the Appearance section.
+
+**Sessions survive a reboot**
+
+[tmux-continuum](https://github.com/tmux-plugins/tmux-continuum) saves all sessions every
+10 minutes with [tmux-resurrect](https://github.com/tmux-plugins/tmux-resurrect) and
+restores them when the tmux server starts. After a reboot, run `tmux` once: it brings back
+every session, window, split, directory and the visible pane contents, replacing the empty
+session it started with. Plain `tmux attach` can't start the server, so use `tmux` for the
+first one; in other tabs `tmux attach` picks a session no tab shows yet.
+
+| Pane was running | Restored as |
+| --- | --- |
+| a shell | a shell in the same directory |
+| `nvim …` | the same `nvim …` command |
+| `claude …` | `claude --continue` (last conversation in that directory) |
+| `codex` | `codex resume --last` (last session in that directory) |
+| anything else | a shell in its directory |
+
+- **Restart more programs:** add them to `@resurrect-processes` (e.g. `"npm run dev"`,
+  `"~server->go run ."`); see the resurrect docs on restoring programs.
+- **Save interval:** `@continuum-save-interval` in minutes (`0` turns autosave off).
+- **No auto-restore:** `set -g @continuum-restore 'off'`, then restore with `Ctrl+B Ctrl+R`.
+- **Saves** live in `~/.local/share/tmux/resurrect` (`last` points to the newest); older
+  files can be deleted. **Plugins** live in `~/.local/share/tmux/plugins`, outside the repo:
+  `make tmux` installs them, `make update-tmux` updates them.
 
 ## Ghostty
 

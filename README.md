@@ -43,6 +43,7 @@ is safe and repairs a machine. Run single steps with `./install.sh node go` or `
 | `link` | Symlinks the configs in `home/` into `$HOME` |
 | `git` | Asks for your name/email, stores them in `~/.config/git/config.local` (not in the repo) |
 | `shell` | Makes zsh the login shell |
+| `tmux` | tmux plugins: resurrect + continuum, so sessions survive a reboot |
 | `node` | nvm, Node 24, global npm packages |
 | `python` | uv, Miniforge (conda/mamba), the `dev` conda env |
 | `go` | Official Go in `/usr/local/go`, Go tools |
@@ -58,6 +59,10 @@ is safe and repairs a machine. Run single steps with `./install.sh node go` or `
 - **Same setup on both systems.** Language toolchains come from their official installers
   (Go, nvm, Miniforge, uv, Claude Code); other CLI tools from Homebrew, which ships prebuilt
   binaries for macOS and Linux. OS differences are handled inside the configs.
+- **Workspaces survive a reboot.** tmux saves every session, window, pane and directory
+  every 10 minutes. After a reboot, run `tmux` once: it restores them and reruns Neovim,
+  `claude --continue` and `codex resume --last` in their panes. Attach other tabs with
+  `tmux attach` (it picks a session no tab shows yet) or switch with `Ctrl+B s`.
 - **Private settings stay local.** Your git identity and anything in `~/.zshrc.local` /
   `~/.zprofile.local` are untracked.
 - **Agent notifications.** Claude Code and Codex send desktop notifications through Ghostty,
@@ -109,6 +114,8 @@ setup/       one script per install step, plus templates copied once (Codex conf
 | `Ctrl+B` `Ctrl+L` | Clear the screen (plain `Ctrl+L` moves to the right pane) |
 | `Ctrl+B` `[` → `v` → `y` | Copy mode, select, copy to the system clipboard |
 | `Ctrl+B` `r` | Reload the config |
+| `Ctrl+B` `Ctrl+S` / `Ctrl+R` | Save / restore all sessions now (saving also happens every 10 min) |
+| `Ctrl+B` `d` | Detach: back to the shell, tmux keeps running |
 
 ### Neovim
 
@@ -140,6 +147,7 @@ Full list: [Neovim guide](home/nvim/.config/nvim/README.md).
 | No agent notifications | Allow Ghostty in System Settings → Notifications; run `make tmux-reload`; restart the agent. |
 | `Ctrl+h/j/k/l` doesn't reach Neovim | Restart Neovim. |
 | Linux: `docker: permission denied` | Log out and back in after `make docker`. |
+| Sessions not restored after a reboot | Start tmux with `tmux`, not `tmux attach`. Check `~/.local/share/tmux/resurrect/last` exists; restore by hand with `Ctrl+B Ctrl+R`. Auto-restore is skipped when another tmux server is already running. |
 | Need an old file back | Look in `~/.dotfiles-backup/`. |
 
 To remove everything: `make unlink`, then restore what you need from `~/.dotfiles-backup/`.

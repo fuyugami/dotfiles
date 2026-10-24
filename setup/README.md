@@ -4,7 +4,7 @@
 every step in this order:
 
 ```
-packages → link → git → shell → node → python → go → docker → agents
+packages → link → git → shell → tmux → node → python → go → docker → agents
 ```
 
 `doctor` is a separate check. Each script works on macOS and Linux and is **idempotent**:
@@ -16,6 +16,7 @@ it checks first and only does what is missing.
 | [`link.sh`](link.sh) | Backs up conflicting files, then `stow` every package in `home/` | `FOLDED`, `PER_FILE` package lists |
 | [`git.sh`](git.sh) | Creates `~/.config/git/config.local` (identity), retires `~/.gitconfig` | — |
 | [`shell.sh`](shell.sh) | `chsh` to the system zsh | — |
+| [`tmux.sh`](tmux.sh) | Clones TPM and every `@plugin` in `tmux.conf` into `~/.local/share/tmux/plugins` | the `@plugin` lines |
 | [`node.sh`](node.sh) | nvm git checkout, Node default, `npm.txt` globals | `NVM_VERSION`, `NODE_VERSION` |
 | [`python.sh`](python.sh) | uv installer, Miniforge, conda envs | install prefix `prefix=` |
 | [`go.sh`](go.sh) | Go from go.dev into `/usr/local/go` (sha256-verified), `go.txt` tools | `GOROOT_DIR`; env `GO_UPDATE=1` |
