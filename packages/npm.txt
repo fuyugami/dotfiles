@@ -1,0 +1,7 @@
+# Global npm packages for the default nvm Node (installed by `install.sh node`).
+# Project tools (vite, framework CLIs) run per project: npx / pnpm dlx.
+typescript
+typescript-language-server
+pyright
+yarn
+pnpm

@@ -1,0 +1,11 @@
+# Fedora base packages (build tools + Homebrew on Linux prerequisites).
+gcc
+gcc-c++
+make
+procps-ng
+curl
+file
+git
+zsh
+unzip
+ca-certificates

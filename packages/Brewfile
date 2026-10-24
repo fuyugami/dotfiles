@@ -1,0 +1,36 @@
+# Shared CLI tools — macOS Homebrew and Homebrew on Linux (prebuilt bottles).
+# macOS apps and Docker runtime: Brewfile.macos.
+# Not here on purpose: toolchains with an official installer are set up by
+# their own steps — Go (go.dev tarball), Node (nvm), Python (Miniforge, uv),
+# Claude Code (native installer), Docker Engine on Linux.
+
+# Shell & terminal
+brew "tmux"
+brew "stow"
+brew "fzf"
+brew "zoxide"
+brew "fastfetch"
+brew "powerlevel10k"
+
+# Editor (Neovim + what its config expects on PATH)
+brew "neovim"
+brew "tree-sitter-cli"
+brew "ripgrep"
+brew "fd"
+brew "lua-language-server"
+brew "stylua"
+
+# Code quality
+brew "pre-commit"
+brew "shellcheck"
+brew "golangci-lint"
+
+# Containers & infra
+brew "kubernetes-cli"
+brew "mkcert"
+
+# Docs & network
+brew "pandoc"
+brew "wget"
+brew "socat"
+brew "telnet"

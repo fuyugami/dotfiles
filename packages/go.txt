@@ -1,0 +1,9 @@
+# Go tools, `go install <module>@latest` (installed by `install.sh go`).
+# Project tools (codegen, mocks, hook managers) belong in each project's go.mod:
+# `go get -tool <module>`, then `go tool <name>`.
+
+golang.org/x/tools/gopls
+golang.org/x/tools/cmd/goimports
+github.com/go-delve/delve/cmd/dlv
+golang.org/x/vuln/cmd/govulncheck
+gotest.tools/gotestsum

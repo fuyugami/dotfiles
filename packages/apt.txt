@@ -1,0 +1,9 @@
+# Debian/Ubuntu base packages (build tools + Homebrew on Linux prerequisites).
+build-essential
+procps
+curl
+file
+git
+zsh
+unzip
+ca-certificates

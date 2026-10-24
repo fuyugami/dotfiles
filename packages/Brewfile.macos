@@ -1,0 +1,11 @@
+# macOS-only formulae and apps. Shared CLI tools: Brewfile.
+
+# Docker via Colima (configured by `install.sh docker`)
+brew "colima", restart_service: :changed
+brew "docker"
+brew "docker-buildx"
+brew "docker-compose"
+
+# Apps the setup relies on
+cask "ghostty"
+cask "codex"
