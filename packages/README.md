@@ -53,10 +53,10 @@ brew "something-mac-only" if OS.mac?               # per-OS line in a shared Bre
 | Remove a tool | delete the line, then `brew uninstall <name>` (or `--cask --zap` for apps) |
 
 Shared groups: shell & terminal, editor tooling (Neovim, tree-sitter CLI, ripgrep, fd,
-language servers, stylua), code quality (pre-commit, shellcheck, golangci-lint),
+language servers incl. texlab, stylua), code quality (pre-commit, shellcheck, golangci-lint),
 Kubernetes CLI and mkcert, docs & network (pandoc, wget, socat, telnet).
 
-**macOS apps:** `Brewfile.macos` only lists apps the setup depends on (Ghostty, Codex) and
+**macOS apps:** `Brewfile.macos` only lists apps the setup depends on (Ghostty, Codex, Skim) and
 the Docker runtime (Colima + Docker CLI). Add `cask "<name>"` for apps you want on every
 Mac; find names with `brew search <name>`, remove an app and its settings with
 `brew uninstall --zap --cask <name>`.

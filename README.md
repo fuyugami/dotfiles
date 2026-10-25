@@ -8,6 +8,7 @@ and AI agents, set up by one idempotent installer.
 | Terminal | Ghostty · tmux · zsh + Powerlevel10k · fzf · zoxide |
 | Editor | Neovim 0.12 (lazy.nvim, native LSP, tree-sitter) |
 | Languages | Go · Node (nvm) + TypeScript · Python (Miniforge conda/mamba, uv) |
+| Writing | LaTeX: TeX Live (MacTeX), VimTeX + latexmk, texlab, Skim (macOS) / Zathura (Linux) |
 | Containers | Docker via Colima (macOS) or Docker Engine (Linux) |
 | AI agents | Claude Code · Codex, with desktop notifications through Ghostty |
 
@@ -47,6 +48,7 @@ is safe and repairs a machine. Run single steps with `./install.sh node go` or `
 | `node` | nvm, Node 24, global npm packages |
 | `python` | uv, Miniforge (conda/mamba), the `dev` conda env |
 | `go` | Official Go in `/usr/local/go`, Go tools |
+| `latex` | TeX Live if missing (MacTeX on macOS), Skim set up to sync with Neovim |
 | `docker` | macOS: Colima VM started at login; Linux: Docker Engine |
 | `agents` | Claude Code and Codex CLIs, a starting Codex config |
 

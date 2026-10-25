@@ -4,7 +4,7 @@
 every step in this order:
 
 ```
-packages → link → git → shell → tmux → node → python → go → docker → agents
+packages → link → git → shell → tmux → node → python → go → latex → docker → agents
 ```
 
 `doctor` is a separate check. Each script works on macOS and Linux and is **idempotent**:
@@ -20,6 +20,7 @@ it checks first and only does what is missing.
 | [`node.sh`](node.sh) | nvm git checkout, Node default, `npm.txt` globals | `NVM_VERSION`, `NODE_VERSION` |
 | [`python.sh`](python.sh) | uv installer, Miniforge, conda envs | install prefix `prefix=` |
 | [`go.sh`](go.sh) | Go from go.dev into `/usr/local/go` (sha256-verified), `go.txt` tools | `GOROOT_DIR`; env `GO_UPDATE=1` |
+| [`latex.sh`](latex.sh) | TeX Live if `latexmk` is missing (macOS: MacTeX cask, Linux: Homebrew `texlive`), Skim's inverse search into Neovim and auto reload | Skim `defaults` keys |
 | [`docker.sh`](docker.sh) | macOS: buildx/compose plugins, Colima VM, `brew services`; Linux: Docker Engine + `docker` group | Colima `--cpu/--memory/--disk` flags |
 | [`agents.sh`](agents.sh) | Claude Code, Codex (Linux via npm), seeds `~/.codex/config.toml` | [`templates/codex/config.toml`](templates/codex/config.toml) |
 | [`doctor.sh`](doctor.sh) | Checks every link, the expected tools and git identity | `tools=` list |
@@ -50,6 +51,7 @@ The steps are the same on both; these are the differences.
 | Homebrew | `/opt/homebrew` (Apple Silicon) or `/usr/local` (Intel) | `/home/linuxbrew/.linuxbrew` |
 | Docker | Colima VM + Docker CLI (below) | Docker Engine from get.docker.com, you're added to the `docker` group (log out/in once) |
 | Codex CLI | `cask "codex"` in `Brewfile.macos` | `npm install -g @openai/codex` |
+| LaTeX | MacTeX + Skim | Homebrew `texlive`; PDF viewer: install `zathura` + `zathura-pdf-mupdf` from your distro |
 | Ghostty | `cask "ghostty"` | not installed: use your distro's package or [ghostty.org](https://ghostty.org); the config is linked already |
 | `PNPM_HOME` | `~/Library/pnpm` | `~/.local/share/pnpm` |
 
