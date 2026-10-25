@@ -5,7 +5,7 @@
 SHELL := /bin/bash
 .DEFAULT_GOAL := help
 
-STEPS := packages link git shell tmux node python go docker agents
+STEPS := packages link git shell tmux node python go latex docker agents
 HOME_PACKAGES := $(shell find home -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort)
 CONDA := $(firstword $(wildcard $(HOME)/miniforge3/bin/mamba $(HOME)/miniforge3/bin/conda))
 BREW := source setup/lib.sh && load_brew &&

@@ -17,7 +17,7 @@ for pkg_dir in "$DOTFILES"/home/*/; do
 done
 
 info "Tools"
-tools="brew stow git zsh tmux nvim rg fd fzf node npm go conda uv docker claude codex"
+tools="brew stow git zsh tmux nvim rg fd fzf node npm go conda uv latexmk texlab docker claude codex"
 for tool in $tools; do
   if has "$tool" || { [ "$tool" = conda ] && [ -x "$HOME/miniforge3/bin/conda" ]; }; then
     ok "$tool"

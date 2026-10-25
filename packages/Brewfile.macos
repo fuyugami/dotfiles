@@ -9,3 +9,4 @@ brew "docker-compose"
 # Apps the setup relies on
 cask "ghostty"
 cask "codex"
+cask "skim" # PDF viewer with SyncTeX for VimTeX

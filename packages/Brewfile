@@ -19,6 +19,7 @@ brew "ripgrep"
 brew "fd"
 brew "lua-language-server"
 brew "stylua"
+brew "texlab" # LaTeX language server; TeX Live itself: install.sh latex
 
 # Code quality
 brew "pre-commit"

@@ -11,7 +11,7 @@ DOTFILES="$(cd "$(dirname "$0")" && pwd)"
 export DOTFILES
 . "$DOTFILES/setup/lib.sh"
 
-STEPS=(packages link git shell tmux node python go docker agents)
+STEPS=(packages link git shell tmux node python go latex docker agents)
 
 usage() {
   cat <<USAGE
@@ -26,6 +26,7 @@ Steps (default: all, in this order):
   node       nvm, Node LTS as default, global npm packages (packages/npm.txt)
   python     uv, Miniforge (conda/mamba) and packages/conda/*.yml envs
   go         Go from go.dev + tools from packages/go.txt (GO_UPDATE=1 to upgrade)
+  latex      TeX Live (MacTeX on macOS) if missing, Skim sync with Neovim
   docker     macOS: Colima; Linux: Docker Engine
   agents     Claude Code + Codex CLIs, Codex config seed
   doctor     check links and tools
