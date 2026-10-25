@@ -57,6 +57,9 @@ vim.lsp.config("lua_ls", {
 
 -- LaTeX: chktex lint warnings when a file is opened or saved.
 vim.lsp.config("texlab", {
+	-- The document folder (with latexmkrc) is the root, not the enclosing git
+	-- repo; otherwise \cite and \ref in chapters can't find the .bib and labels.
+	root_markers = { { ".latexmkrc", "latexmkrc", ".texlabroot", "texlabroot", "Tectonic.toml" }, ".git" },
 	settings = {
 		texlab = { chktex = { onOpenAndSave = true } },
 	},
