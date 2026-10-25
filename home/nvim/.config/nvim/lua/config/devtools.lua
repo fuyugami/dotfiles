@@ -12,6 +12,8 @@ vim.api.nvim_create_user_command("DevTools", function()
 		"typescript-language-server",
 		"prettier",
 		"stylua",
+		"latexmk",
+		"texlab",
 		"rg",
 		"fd",
 	}

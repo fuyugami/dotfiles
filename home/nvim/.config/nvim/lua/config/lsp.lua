@@ -55,6 +55,13 @@ vim.lsp.config("lua_ls", {
 	settings = { Lua = {} },
 })
 
+-- LaTeX: chktex lint warnings when a file is opened or saved.
+vim.lsp.config("texlab", {
+	settings = {
+		texlab = { chktex = { onOpenAndSave = true } },
+	},
+})
+
 -- LSP: the server executables are optional; install only what you use.
 for _, server in ipairs({
 	{ exe = "gopls", id = "gopls" }, -- installed with `go install`
@@ -62,6 +69,7 @@ for _, server in ipairs({
 	{ exe = "pyright-langserver", id = "pyright" },
 	{ exe = "typescript-language-server", id = "ts_ls" },
 	{ exe = "lua-language-server", id = "lua_ls" },
+	{ exe = "texlab", id = "texlab" }, -- Homebrew; formats with TeX Live's latexindent
 }) do
 	if vim.fn.executable(server.exe) == 1 then
 		vim.lsp.enable(server.id) -- Nvim 0.11+, NOT require('lspconfig').setup

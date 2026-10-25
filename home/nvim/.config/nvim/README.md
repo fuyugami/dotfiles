@@ -33,6 +33,7 @@ lazy-lock.json            pinned plugin commits
 | `smart-splits.lua` | smart-splits.nvim + tmux backend | `Ctrl+h/j/k/l` across splits and tmux panes |
 | `which-key.lua` | which-key.nvim | shows pending key combos |
 | `render-markdown.lua` | render-markdown.nvim | renders Markdown in the buffer (raw text on the cursor line) |
+| `vimtex.lua` | vimtex | LaTeX: latexmk builds, Skim/Zathura viewer, SyncTeX (texlab LSP in `lsp.lua`) |
 
 ## Keys (leader = `Space`)
 
@@ -52,6 +53,7 @@ lazy-lock.json            pinned plugin commits
 | `Space gs` · `gD` `gu` `gS` `gH` `gC` | git status · diffview: HEAD / unstaged / staged / file history / close |
 | `]h` `[h` · `Space gp` `gb` `ghs` `ghr` | hunks · preview, blame, stage, reset |
 | `Space mp` · `Space mP` | Markdown: toggle rendering · rendered view in a side split |
+| `\ll` `\lv` `\le` `\lc` · `\lt` | LaTeX (VimTeX): build · view · errors · clean · table of contents |
 
 Plain `y`/`p` use Neovim's own registers; only the `Space` variants touch the system
 clipboard (`clipboard` is empty on purpose). Press `Space` and wait to see everything in which-key.

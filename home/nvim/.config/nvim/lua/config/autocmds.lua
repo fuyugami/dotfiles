@@ -30,3 +30,15 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.bo.softtabstop = 0
 	end,
 })
+
+-- LaTeX is prose: wrap long lines at word boundaries instead of scrolling sideways.
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "tex", "bib" },
+	callback = function()
+		vim.wo[0][0].wrap = true
+		vim.wo[0][0].linebreak = true
+		vim.bo.shiftwidth = 2
+		vim.bo.tabstop = 2
+		vim.bo.softtabstop = 2
+	end,
+})

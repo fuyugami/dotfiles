@@ -12,5 +12,6 @@
   "nvim-treesitter": { "branch": "main", "commit": "29212d826054bb2948fa9d3a99eca9bf6a050eb2" },
   "render-markdown.nvim": { "branch": "main", "commit": "8e8795368391036643b622875a6da6a51bcd33f4" },
   "smart-splits.nvim": { "branch": "master", "commit": "5fd4fe53c2df2009e689f61511e3c474a9eccbaf" },
+  "vimtex": { "branch": "master", "commit": "02eee260766d031185449c9600f03b933fa0357c" },
   "which-key.nvim": { "branch": "main", "commit": "3aab2147e74890957785941f0c1ad87d0a44c15a" }
 }
