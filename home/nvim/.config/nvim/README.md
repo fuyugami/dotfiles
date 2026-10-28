@@ -53,6 +53,7 @@ lazy-lock.json            pinned plugin commits
 | `Space gs` · `gD` `gu` `gS` `gH` `gC` | git status · diffview: HEAD / unstaged / staged / file history / close |
 | `]h` `[h` · `Space gp` `gb` `ghs` `ghr` | hunks · preview, blame, stage, reset |
 | `Space mp` · `Space mP` | Markdown: toggle rendering · rendered view in a side split |
+| `]x` `[x` | Python notebook scripts (jupytext `# %%` cells): next / previous cell |
 | `\ll` `\lv` `\le` `\lc` · `\lt` | LaTeX (VimTeX): build · view · errors · clean · table of contents |
 
 Plain `y`/`p` use Neovim's own registers; only the `Space` variants touch the system

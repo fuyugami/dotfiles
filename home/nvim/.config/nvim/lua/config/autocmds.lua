@@ -42,3 +42,30 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.bo.softtabstop = 2
 	end,
 })
+
+-- Notebook scripts (jupytext py:percent, `# %%` cells): ]x / [x jump between cells.
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "python",
+	callback = function(args)
+		local function jump(flags)
+			return function()
+				for _ = 1, vim.v.count1 do
+					vim.fn.search("^# %%", flags)
+				end
+			end
+		end
+		local opts = { buffer = args.buf }
+		vim.keymap.set(
+			{ "n", "x", "o" },
+			"]x",
+			jump("W"),
+			vim.tbl_extend("force", opts, { desc = "Next notebook cell" })
+		)
+		vim.keymap.set(
+			{ "n", "x", "o" },
+			"[x",
+			jump("bW"),
+			vim.tbl_extend("force", opts, { desc = "Previous notebook cell" })
+		)
+	end,
+})
