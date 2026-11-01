@@ -28,11 +28,17 @@ return {
 			},
 
 			view = {
-				width = 36,
+				-- Grow to fit the longest visible name, capped so the editor keeps room
+				width = {
+					min = 36,
+					max = "40%",
+				},
 				side = "left",
 			},
 
 			renderer = {
+				-- Names still clipped by the cap show in full in a float under the cursor
+				full_name = true,
 				group_empty = true,
 				highlight_git = "icon",
 

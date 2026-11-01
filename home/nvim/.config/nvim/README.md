@@ -33,6 +33,7 @@ lazy-lock.json            pinned plugin commits
 | `smart-splits.lua` | smart-splits.nvim + tmux backend | `Ctrl+h/j/k/l` across splits and tmux panes |
 | `which-key.lua` | which-key.nvim | shows pending key combos |
 | `render-markdown.lua` | render-markdown.nvim | renders Markdown in the buffer (raw text on the cursor line) |
+| `live-preview.lua` | live-preview.nvim | live browser preview of Markdown (Lua server, scroll sync, Mermaid) |
 | `vimtex.lua` | vimtex | LaTeX: latexmk builds, Skim/Zathura viewer, SyncTeX (texlab LSP in `lsp.lua`) |
 
 ## Keys (leader = `Space`)
@@ -53,6 +54,7 @@ lazy-lock.json            pinned plugin commits
 | `Space gs` · `gD` `gu` `gS` `gH` `gC` | git status · diffview: HEAD / unstaged / staged / file history / close |
 | `]h` `[h` · `Space gp` `gb` `ghs` `ghr` | hunks · preview, blame, stage, reset |
 | `Space mp` · `Space mP` | Markdown: toggle rendering · rendered view in a side split |
+| `Space mb` · `Space mB` | Markdown: live preview in the browser · stop it |
 | `]x` `[x` | Python notebook scripts (jupytext `# %%` cells): next / previous cell |
 | `\ll` `\lv` `\le` `\lc` · `\lt` | LaTeX (VimTeX): build · view · errors · clean · table of contents |
 

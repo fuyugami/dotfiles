@@ -93,8 +93,9 @@ return {
 
 			hooks = {
 				diff_buf_read = function()
-					-- Avoid wrapping code in side-by-side diffs
-					vim.opt_local.wrap = false
+					-- Soft-wrap long lines at word boundaries (<leader>uw toggles per window)
+					vim.opt_local.wrap = true
+					vim.opt_local.linebreak = true
 					vim.opt_local.list = false
 				end,
 			},
@@ -104,5 +105,41 @@ return {
 				disable_defaults = false,
 			},
 		},
+
+		config = function(_, opts)
+			require("diffview").setup(opts)
+
+			-- Diffview only supports a fixed panel width. Fit the changed-file
+			-- panel to its longest line instead, like nvim-tree's view.width:
+			-- never narrower than the configured width, never wider than 40%.
+			local FilePanel = require("diffview.scene.views.diff.file_panel").FilePanel
+			local min_width = opts.file_panel.win_config.width
+			local max_ratio = 0.4
+
+			local get_config = FilePanel.get_config
+			function FilePanel:get_config()
+				local config = get_config(self)
+				local sideways = config.position == "left" or config.position == "right"
+
+				if config.type == "split" and sideways and self:buf_loaded() then
+					local longest = 0
+					for _, line in ipairs(vim.api.nvim_buf_get_lines(self.bufid, 0, -1, false)) do
+						longest = math.max(longest, vim.fn.strdisplaywidth(line))
+					end
+
+					local max_width = math.floor(vim.o.columns * max_ratio)
+					config.width = math.max(min_width, math.min(longest + 2, max_width))
+				end
+
+				return config
+			end
+
+			-- Re-fit whenever the list changes (open/close folders, new files)
+			local redraw = FilePanel.redraw
+			function FilePanel:redraw(...)
+				redraw(self, ...)
+				self:resize()
+			end
+		end,
 	},
 }

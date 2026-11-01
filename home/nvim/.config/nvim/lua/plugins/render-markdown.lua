@@ -9,6 +9,20 @@ return {
 		opts = {
 			-- Checkbox and callout completions through mini.completion's LSP source.
 			completions = { lsp = { enabled = true } },
+			pipe_table = {
+				-- Rounded box-drawing borders (╭─┬─╮).
+				preset = "round",
+				-- Draw the top and bottom borders on virtual lines, so tables without
+				-- a blank line above or below still get a full frame.
+				border_virtual = true,
+				-- Rows wider than the window wrap inside their cells (pipe_table.wrap,
+				-- on by default). That only happens while 'wrap' is on, so keep it on.
+			},
+			anti_conceal = {
+				-- Keep the table borders drawn when the cursor is on a table row;
+				-- only the cell text goes raw for editing.
+				ignore = { table_border = true },
+			},
 		},
 		keys = {
 			{
