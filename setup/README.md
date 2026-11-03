@@ -21,7 +21,7 @@ one (e.g. stow from `packages`) stops with a message naming it.
 | Script | Does | Settings you can change |
 | --- | --- | --- |
 | [`packages.sh`](packages.sh) | macOS: Xcode CLT check, Homebrew, `brew bundle --no-upgrade`. Linux: `apt-get` (Debian, Ubuntu) or `dnf` (Fedora) with `apt.txt` / `dnf.txt`; names the release lacks are skipped with a warning | lists in [`packages/`](../packages/README.md); `apt.txt` accepts `name>=version` |
-| [`tools.sh`](tools.sh) | Linux: Neovim (≥ 0.12), tree-sitter-cli (≥ 0.26.1), lua-language-server, stylua, golangci-lint, kubectl, texlab and Powerlevel10k from official releases when apt/dnf lack them or are too old; sha256-verified, into `~/.local/opt` and `~/.local/bin`. macOS: nothing to do | `NVIM_MIN`, `TREE_SITTER_MIN`; env `TOOLS_UPDATE=1`, `GITHUB_TOKEN` |
+| [`tools.sh`](tools.sh) | Linux: Neovim (≥ 0.12), tree-sitter-cli (≥ 0.26.1), lua-language-server, stylua, golangci-lint, lazygit, kubectl, texlab and Powerlevel10k from official releases when apt/dnf lack them or are too old; sha256-verified, into `~/.local/opt` and `~/.local/bin`. macOS: nothing to do | `NVIM_MIN`, `TREE_SITTER_MIN`; env `TOOLS_UPDATE=1`, `GITHUB_TOKEN` |
 | [`link.sh`](link.sh) | Backs up conflicting files, then `stow` every package in `home/` | `FOLDED`, `PER_FILE` package lists |
 | [`git.sh`](git.sh) | Creates `~/.config/git/config.local` (identity), retires `~/.gitconfig` | — |
 | [`shell.sh`](shell.sh) | `chsh` to the system zsh | — |
@@ -60,7 +60,7 @@ The steps are the same on both; these are the differences.
 | --- | --- | --- |
 | Base packages | Xcode Command Line Tools | `packages/apt.txt` / `dnf.txt` |
 | CLI tools | Homebrew (`/opt/homebrew` or `/usr/local`), `packages/Brewfile` | `apt` (Debian, Ubuntu) / `dnf` (Fedora): `apt.txt`, `dnf.txt`; no Homebrew |
-| Neovim, tree-sitter, lua-language-server, stylua, golangci-lint, kubectl | Brewfile | `tools` step (official releases, `~/.local/bin`) |
+| Neovim, tree-sitter, lua-language-server, stylua, golangci-lint, lazygit, kubectl | Brewfile | `tools` step (official releases, `~/.local/bin`) |
 | Docker | Colima VM + Docker CLI (below) | Docker Engine from get.docker.com, you're added to the `docker` group (log out/in once) |
 | Codex CLI | `cask "codex"` in the Brewfile | `npm install -g @openai/codex` |
 | LaTeX | MacTeX + Skim | apt/dnf TeX Live; PDF viewer: install `zathura` + `zathura-pdf-mupdf` from your distro |

@@ -32,6 +32,8 @@ fd-find # binary is fdfind; `install.sh tools` links it as fd
 texlab # Ubuntu 26.04+; `install.sh tools` downloads it where apt lacks it
 
 # Code quality, docs and network
+# (lazygit: in apt from Ubuntu 25.04; older releases get it from the tools step)
+lazygit
 shellcheck
 pre-commit
 mkcert

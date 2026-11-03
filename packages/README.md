@@ -78,7 +78,7 @@ binaries only where apt/dnf are missing or too old, checked against a version fl
 | --- | --- | --- |
 | Neovim | 0.12 | the config targets it (Ubuntu 26.10 has 0.12 in apt; 26.04 has 0.11, 24.04 has 0.9) |
 | tree-sitter-cli | 0.26.1 | required by nvim-treesitter's `main` branch (apt: 26.10 has 0.26, 26.04 has 0.25) |
-| lua-language-server, stylua, golangci-lint, kubectl | any | not in Ubuntu's repos |
+| lua-language-server, stylua, golangci-lint, lazygit, kubectl | any | not in Ubuntu's repos (lazygit: 25.04 and later have it) |
 | texlab | any | in Ubuntu 26.04's apt, otherwise downloaded |
 
 `apt.txt` lists Neovim and tree-sitter-cli as `name>=version`, so apt installs them only where

@@ -21,8 +21,8 @@ mkdir -p "$OPT" "$BIN"
 export PATH="$BIN:$PATH"
 
 case "$(uname -m)" in
-  x86_64) NVIM_ARCH=x86_64 LUA_ARCH=x64 STYLUA_ARCH=x86_64 GOLANGCI_ARCH=amd64 TEXLAB_ARCH=x86_64 TS_ARCH=x64 K8S_ARCH=amd64 ;;
-  aarch64 | arm64) NVIM_ARCH=arm64 LUA_ARCH=arm64 STYLUA_ARCH=aarch64 GOLANGCI_ARCH=arm64 TEXLAB_ARCH=aarch64 TS_ARCH=arm64 K8S_ARCH=arm64 ;;
+  x86_64) NVIM_ARCH=x86_64 LUA_ARCH=x64 STYLUA_ARCH=x86_64 GOLANGCI_ARCH=amd64 TEXLAB_ARCH=x86_64 LAZYGIT_ARCH=x86_64 TS_ARCH=x64 K8S_ARCH=amd64 ;;
+  aarch64 | arm64) NVIM_ARCH=arm64 LUA_ARCH=arm64 STYLUA_ARCH=aarch64 GOLANGCI_ARCH=arm64 TEXLAB_ARCH=aarch64 LAZYGIT_ARCH=arm64 TS_ARCH=arm64 K8S_ARCH=arm64 ;;
   *) die "unsupported CPU: $(uname -m)" ;;
 esac
 
@@ -138,6 +138,17 @@ tool_golangci_lint() {
   ok "golangci-lint $FETCHED_TAG"
 }
 
+tool_lazygit() {
+  need lazygit || { ok "lazygit"; return 0; }
+  local tmp
+  tmp="$(mktemp -d)"
+  fetch jesseduffield/lazygit "lazygit_@VER@_linux_$LAZYGIT_ARCH.tar.gz" "$tmp/lg.tar.gz"
+  tar -xzf "$tmp/lg.tar.gz" -C "$tmp" lazygit
+  install -m 0755 "$tmp/lazygit" "$BIN/lazygit"
+  rm -rf "$tmp"
+  ok "lazygit $FETCHED_TAG"
+}
+
 tool_texlab() {
   need texlab || { ok "texlab"; return 0; }
   local tmp
@@ -183,7 +194,7 @@ tool_powerlevel10k() {
 
 # --- run ---------------------------------------------------------------------
 
-TOOLS=(nvim tree_sitter lua_language_server stylua golangci_lint texlab kubectl fd powerlevel10k)
+TOOLS=(nvim tree_sitter lua_language_server stylua golangci_lint lazygit texlab kubectl fd powerlevel10k)
 
 # Child run: one tool (a failing tool must not stop the others, and `set -e` is
 # ignored inside functions called from `||`, so each tool gets its own process).

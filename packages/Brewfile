@@ -25,6 +25,7 @@ brew "texlab" # LaTeX language server; TeX Live itself: install.sh latex
 brew "pre-commit"
 brew "shellcheck"
 brew "golangci-lint"
+brew "lazygit"
 
 # Containers & infra
 brew "kubernetes-cli"

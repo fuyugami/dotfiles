@@ -19,7 +19,7 @@ for pkg_dir in "$DOTFILES"/home/*/; do
 done
 
 info "Tools"
-tools="stow git zsh tmux nvim rg fd fzf node npm go conda uv tree-sitter lua-language-server stylua latexmk texlab docker claude codex"
+tools="stow git zsh tmux nvim rg fd fzf node npm go conda uv tree-sitter lua-language-server stylua lazygit latexmk texlab docker claude codex"
 [ "$OS" != macos ] || tools="brew $tools"
 for tool in $tools; do
   if has "$tool"; then
