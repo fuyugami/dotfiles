@@ -19,13 +19,31 @@ done
 info "Tools"
 tools="brew stow git zsh tmux nvim rg fd fzf node npm go conda uv latexmk texlab docker claude codex"
 for tool in $tools; do
-  if has "$tool" || { [ "$tool" = conda ] && [ -x "$HOME/miniforge3/bin/conda" ]; }; then
+  if has "$tool" || { [ "$tool" = conda ] && [ -x "$HOME/miniforge3/bin/conda" ]; } || { [ "$tool" = uv ] && [ -x "$HOME/.local/bin/uv" ]; }; then
     ok "$tool"
   else
     warn "$tool missing"
     problems=$((problems + 1))
   fi
 done
+
+info "Python"
+conda_bin="$HOME/miniforge3/bin/conda"
+if [ -x "$conda_bin" ]; then
+  envs="$("$conda_bin" env list | awk '!/^#/ {print $1}')"
+  for env_file in "$DOTFILES"/packages/conda/*.yml; do
+    name="$(sed -n 's/^name: *//p' "$env_file")"
+    if printf '%s\n' "$envs" | grep -qx "$name"; then
+      ok "conda env $name: $("$HOME/miniforge3/envs/$name/bin/python" --version 2>&1)"
+    else
+      warn "conda env $name missing: run ./install.sh python"
+      problems=$((problems + 1))
+    fi
+  done
+else
+  warn "Miniforge missing: run ./install.sh python"
+  problems=$((problems + 1))
+fi
 
 info "tmux plugins"
 if [ -x "$HOME/.local/share/tmux/plugins/tpm/tpm" ]; then

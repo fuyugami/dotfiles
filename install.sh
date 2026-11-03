@@ -39,6 +39,22 @@ case "${1:-}" in -h|--help) usage; exit 0 ;; esac
 [ $# -gt 0 ] || set -- "${STEPS[@]}"
 for step in "$@"; do
   [ -f "$DOTFILES/setup/$step.sh" ] && [ "$step" != lib ] || { usage; die "unknown step: $step"; }
-  info "[$step]"
-  bash "$DOTFILES/setup/$step.sh"
 done
+
+# A failing step is reported and the remaining steps still run; under plain
+# `set -e` one failure (often without its own message) silently ended the run.
+failed=()
+for step in "$@"; do
+  info "[$step]"
+  status=0
+  bash "$DOTFILES/setup/$step.sh" || status=$?
+  if [ "$status" -ne 0 ]; then
+    warn "[$step] failed (exit $status)"
+    failed+=("$step")
+  fi
+done
+
+if [ ${#failed[@]} -gt 0 ]; then
+  die "failed steps: ${failed[*]} (re-run with: ./install.sh ${failed[*]})"
+fi
+ok "done: $*"
