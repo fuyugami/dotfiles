@@ -33,3 +33,6 @@ opt.foldlevelstart = 99
 -- Ghostty and a correctly configured tmux support 24-bit color.
 opt.termguicolors = true
 opt.background = "dark"
+
+-- Allow unmodified buffers to refresh from disk.
+vim.opt.autoread = true

@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# Run inside a tmux pane. Each command runs in interactive login Zsh so
+# your .zprofile and .zshrc toolchain configuration is honored.
+# Closing the agent returns to an interactive project shell; panes stay open.
+set -u
+
+case "${1:-shell}" in
+  editor)
+    exec zsh -lic '
+      if command -v nvim >/dev/null 2>&1; then
+        nvim
+      else
+        print -r -- "Neovim not installed"
+      fi
+      exec zsh -l
+    '
+    ;;
+  shell)
+    exec zsh -l
+    ;;
+  codex)
+    exec zsh -lic '
+      if command -v codex >/dev/null 2>&1; then
+        codex -c model_reasoning_effort=medium
+      else
+        print -r -- "Codex not installed (run make agents)"
+      fi
+      exec zsh -l
+    '
+    ;;
+  claude)
+    exec zsh -lic '
+      if command -v claude >/dev/null 2>&1; then
+        claude --model sonnet --effort medium --permission-mode plan
+      else
+        print -r -- "Claude Code not installed (run make agents)"
+      fi
+      exec zsh -l
+    '
+    ;;
+  google)
+    exec zsh -lic '
+      if command -v agy >/dev/null 2>&1; then
+        agy --mode plan
+      elif command -v gemini >/dev/null 2>&1; then
+        print -r -- "Antigravity not installed; starting available Gemini CLI"
+        gemini --approval-mode=plan
+      else
+        print -r -- "Install Antigravity CLI (agy), then start: agy --mode plan"
+      fi
+      exec zsh -l
+    '
+    ;;
+  *)
+    printf 'Unknown tproj pane role: %s\n' "$1" >&2
+    exit 2
+    ;;
+esac

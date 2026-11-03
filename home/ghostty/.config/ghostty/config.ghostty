@@ -16,7 +16,7 @@ window-padding-x = 8
 window-padding-y = 6
 
 # Slightly translucent window background
-background-opacity = 0.75
+background-opacity = 0.95
 
 # macOS keyboard behavior
 macos-option-as-alt = left

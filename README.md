@@ -99,7 +99,7 @@ setup/       one script per install step, plus templates copied once (Codex conf
 
 | Command / keys | Does |
 | --- | --- |
-| `tproj [dir] [name]` | Open a tmux session for a project with `shell`, `code` (Neovim), `claude` and `codex` windows |
+| `tproj [-a "agents"] [dir] [name]` | Open a tmux session for a project: Neovim, a shell, and 1–3 agent panes on the right (`claude`, `codex`, `agy`; default `claude`), e.g. `tproj -a "claude claude agy"` |
 | `z <part>` | Jump to a directory you use often |
 | `~dev`, `~work`, `~docs`, `~dot` | Jump to named directories |
 | `Ctrl+R` · `Ctrl+T` · `Alt+C` | fzf: search history · insert a file · cd into a directory |

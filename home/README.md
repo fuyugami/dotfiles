@@ -89,8 +89,9 @@ be linked into `$HOME`. Document packages in this file instead.
 - **Turn off fastfetch:** delete its block at the top of `.zshrc`.
 - **Vi mode in the shell:** uncomment `bindkey -v` in `options.zsh`.
 - **History size:** `HISTSIZE` (in memory) / `SAVEHIST` (on disk) in `options.zsh`.
-- **`tproj` windows:** edit the `code` / `claude` / `codex` blocks in `tproj.zsh`
-  (each is created only if missing, so existing sessions are safe).
+- **`tproj` agents:** pass `-a "claude codex agy"` (1–3 panes, top to bottom) or set
+  `TPROJ_AGENTS` for a different default. Each agent's command lives in
+  `bin/.local/bin/tproj-pane`; the layout is in `tproj.zsh`.
 - **Startup time:** `time zsh -lic exit`; nvm and conda are the largest costs.
   Don't run `conda init` — `toolchains.zsh` already does its job.
 

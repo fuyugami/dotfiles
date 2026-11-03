@@ -14,11 +14,14 @@ ok "$("$HOME/.local/bin/uv" --version) (update: uv self update)"
 prefix="$HOME/miniforge3"
 if [ ! -x "$prefix/bin/conda" ]; then
   info "Installing Miniforge"
-  installer="$(mktemp)"
+  # The installer refuses to run unless $0 ends in .sh (its guard against
+  # being sourced), so keep that name inside a temp dir rather than mktemp's.
+  tmpdir="$(mktemp -d)"
+  installer="$tmpdir/Miniforge3.sh"
   curl -fsSL -o "$installer" \
     "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname -s)-$(uname -m).sh"
   bash "$installer" -b -p "$prefix"
-  rm -f "$installer"
+  rm -rf "$tmpdir"
 fi
 conda="$prefix/bin/mamba"
 [ -x "$conda" ] || conda="$prefix/bin/conda"

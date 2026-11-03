@@ -15,7 +15,7 @@ return {
 			},
 
 			signs_staged_enable = true,
-			current_line_blame = false,
+			current_line_blame = true, -- Inline blame on by default; <leader>gB toggles it off
 			word_diff = false,
 			attach_to_untracked = false,
 

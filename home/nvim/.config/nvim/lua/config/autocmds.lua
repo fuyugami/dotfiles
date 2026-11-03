@@ -69,3 +69,19 @@ vim.api.nvim_create_autocmd("FileType", {
 		)
 	end,
 })
+
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
+	callback = function()
+		if not vim.bo.modified then
+			vim.cmd("silent! checktime")
+		end
+	end,
+	desc = "Refresh files edited by coding agents",
+})
+
+vim.api.nvim_create_autocmd("FileChangedShellPost", {
+	callback = function(args)
+		vim.notify("Updated from disk: " .. vim.fn.fnamemodify(args.file, ":t"), vim.log.levels.INFO)
+	end,
+	desc = "Notify after external file changes",
+})
