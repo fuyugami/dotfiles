@@ -27,9 +27,6 @@ keybind = cmd+k=text:\x02\x0c
 
 # Shell integration
 shell-integration = detect
-# Only matters when you `ssh` from Ghostty to a machine that does not know the
-# xterm-ghostty terminal type (e.g. Ubuntu Server, where tmux/nvim/clear would fail
-# with "unknown terminal type"): ssh-terminfo copies it over on first connect,
 # ssh-env falls back to TERM=xterm-256color if that fails. Harmless elsewhere.
 shell-integration-features = ssh-terminfo,ssh-env
 
