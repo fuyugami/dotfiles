@@ -10,7 +10,7 @@ sed -n "s/^set -g @plugin '\(.*\)'$/\1/p" "$DOTFILES/home/tmux/.config/tmux/tmux
   dir="$PLUGINS/${repo##*/}"
   if [ ! -d "$dir" ]; then
     info "Installing $repo"
-    git clone -q --depth 1 "https://github.com/$repo" "$dir"
+    git clone -q --depth 1 "https://github.com/$repo" "$dir" </dev/null
   fi
 done
 ok "tmux plugins in $PLUGINS"

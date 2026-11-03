@@ -53,6 +53,6 @@ read_list "$DOTFILES/packages/go.txt" | while read -r module; do
     continue
   fi
   info "go install $module@latest"
-  go install "$module@latest"
+  go install "$module@latest" </dev/null
 done
 ok "go tools in $bin_dir"

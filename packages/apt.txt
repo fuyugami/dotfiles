@@ -1,4 +1,12 @@
-# Debian/Ubuntu base packages (build tools + Homebrew on Linux prerequisites).
+# Debian/Ubuntu (apt): build tools plus the CLI tools the setup expects.
+# One package per line; a name this release does not carry is skipped with a warning.
+# `name>=version` installs only if apt's candidate is at least that version (Ubuntu
+# 26.10 has Neovim 0.12; 26.04 and 24.04 do not). Where it is skipped, or the tool is
+# missing from apt altogether (lua-language-server, stylua, golangci-lint, kubectl),
+# `install.sh tools` downloads it from its official release. Keep the versions in
+# step with NVIM_MIN / TREE_SITTER_MIN in setup/tools.sh.
+
+# Build tools and bootstrap
 build-essential
 procps
 curl
@@ -6,4 +14,28 @@ file
 git
 zsh
 unzip
+jq
 ca-certificates
+
+# Shell & terminal
+tmux
+stow
+fzf
+zoxide
+fastfetch # Ubuntu 26.04+; optional
+
+# Editor tooling
+neovim>=0.12
+tree-sitter-cli>=0.26.1
+ripgrep
+fd-find # binary is fdfind; `install.sh tools` links it as fd
+texlab # Ubuntu 26.04+; `install.sh tools` downloads it where apt lacks it
+
+# Code quality, docs and network
+shellcheck
+pre-commit
+mkcert
+pandoc
+wget
+socat
+telnet

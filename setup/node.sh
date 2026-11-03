@@ -20,8 +20,8 @@ set -e
 ok "node $(node --version) (nvm default)"
 
 read_list "$DOTFILES/packages/npm.txt" | while read -r pkg; do
-  npm ls -g --depth=0 "$pkg" >/dev/null 2>&1 && continue
+  npm ls -g --depth=0 "$pkg" </dev/null >/dev/null 2>&1 && continue
   info "npm install -g $pkg"
-  npm install -g --silent "$pkg"
+  npm install -g --silent "$pkg" </dev/null
 done
 ok "global npm packages"

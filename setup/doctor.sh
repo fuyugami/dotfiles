@@ -4,12 +4,14 @@ set -eo pipefail
 . "$(dirname "$0")/lib.sh"
 load_brew || true
 load_nvm || true
+# The tool dirs ~/.zprofile adds, so doctor works from any shell (even a fresh one).
+PATH="$HOME/.local/bin:$HOME/go/bin:/usr/local/go/bin:$HOME/miniforge3/condabin:$PATH"
 problems=0
 
 info "Links"
 for pkg_dir in "$DOTFILES"/home/*/; do
   pkg="$(basename "$pkg_dir")"
-  broken="$(cd "$pkg_dir" && find . \( -type f -o -type l \) ! -name .DS_Store | while read -r rel; do
+    broken="$(cd "$pkg_dir" && find . \( -type f -o -type l \) ! -name .DS_Store | while read -r rel; do
     rel="${rel#./}"
     [ "$(readlink -f "$HOME/$rel" 2>/dev/null)" = "$DOTFILES/home/$pkg/$rel" ] || echo "$HOME/$rel"
   done)"
@@ -17,9 +19,10 @@ for pkg_dir in "$DOTFILES"/home/*/; do
 done
 
 info "Tools"
-tools="brew stow git zsh tmux nvim rg fd fzf node npm go conda uv latexmk texlab docker claude codex"
+tools="stow git zsh tmux nvim rg fd fzf node npm go conda uv tree-sitter lua-language-server stylua latexmk texlab docker claude codex"
+[ "$OS" != macos ] || tools="brew $tools"
 for tool in $tools; do
-  if has "$tool" || { [ "$tool" = conda ] && [ -x "$HOME/miniforge3/bin/conda" ]; } || { [ "$tool" = uv ] && [ -x "$HOME/.local/bin/uv" ]; }; then
+  if has "$tool"; then
     ok "$tool"
   else
     warn "$tool missing"

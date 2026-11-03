@@ -2,12 +2,15 @@ return {
 	{
 		"nvim-tree/nvim-tree.lua",
 
-		cmd = {
-			"NvimTreeToggle",
-			"NvimTreeFindFile",
-		},
+		-- Loaded at startup: it opens on launch and handles `nvim <dir>`.
+		lazy = false,
 
 		keys = {
+			{
+				"<leader>e",
+				"<cmd>NvimTreeToggle<CR>",
+				desc = "Toggle project tree",
+			},
 			{
 				"<leader>te",
 				"<cmd>NvimTreeToggle<CR>",
@@ -22,6 +25,12 @@ return {
 
 		opts = {
 			sync_root_with_cwd = true,
+
+			-- `nvim <dir>`: show the tree for that folder instead of a directory buffer.
+			hijack_directories = {
+				enable = true,
+				auto_open = true,
+			},
 
 			update_focused_file = {
 				enable = true,
@@ -94,6 +103,32 @@ return {
 
 		config = function(_, opts)
 			require("nvim-tree").setup(opts)
+
+			-- Text piped in (`cmd | nvim -`) is not a project: no tree.
+			local from_stdin = false
+			vim.api.nvim_create_autocmd("StdinReadPre", {
+				callback = function()
+					from_stdin = true
+				end,
+			})
+
+			-- Open the tree on launch for `nvim` and `nvim <dir>` (the tproj editor
+			-- pane), rooted at that folder. Editing files (`nvim foo.py`, git commit
+			-- messages) and diff mode start without it.
+			vim.api.nvim_create_autocmd("VimEnter", {
+				callback = function(data)
+					if from_stdin or vim.o.diff or #vim.api.nvim_list_uis() == 0 then
+						return
+					end
+					local api = require("nvim-tree.api")
+					if vim.fn.argc() == 0 then
+						api.tree.open({ path = vim.fn.getcwd() })
+					elseif vim.fn.argc() == 1 and vim.fn.isdirectory(data.file) == 1 then
+						vim.cmd.cd(data.file)
+						api.tree.open({ path = vim.fn.getcwd() })
+					end
+				end,
+			})
 		end,
 	},
 }

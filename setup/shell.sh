@@ -8,11 +8,12 @@ if [ "$OS" = macos ]; then
   current="$(dscl . -read "$HOME" UserShell | awk '{print $2}')"
 else
   zsh_path="$(command -v zsh)" || die "zsh is missing: run ./install.sh packages"
-  current="$(getent passwd "$USER" | cut -d: -f7)"
+  has chsh || die "chsh is missing: run ./install.sh packages"
+  current="$(getent passwd "$(id -un)" | cut -d: -f7)"
 fi
 
 if [ "$current" != "$zsh_path" ]; then
   grep -qx "$zsh_path" /etc/shells || echo "$zsh_path" | sudo tee -a /etc/shells >/dev/null
-  chsh -s "$zsh_path"
+  if [ "$OS" = macos ]; then chsh -s "$zsh_path"; else sudo chsh -s "$zsh_path" "$(id -un)"; fi
 fi
 ok "login shell: $zsh_path"

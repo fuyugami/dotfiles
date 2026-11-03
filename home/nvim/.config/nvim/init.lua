@@ -5,7 +5,7 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
--- mini.files opens directory buffers (`nvim .`); nvim-tree is an on-demand sidebar.
+-- nvim-tree replaces netrw: it opens on launch and for `nvim <dir>` (plugins/nvim-tree.lua).
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 

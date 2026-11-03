@@ -1,8 +1,8 @@
-# Shared CLI tools — macOS Homebrew and Homebrew on Linux (prebuilt bottles).
-# macOS apps and Docker runtime: Brewfile.macos.
+# macOS only: Homebrew formulae and apps. (Linux uses apt/dnf plus official
+# release binaries: packages/apt.txt, dnf.txt and `install.sh tools`.)
 # Not here on purpose: toolchains with an official installer are set up by
 # their own steps — Go (go.dev tarball), Node (nvm), Python (Miniforge, uv),
-# Claude Code (native installer), Docker Engine on Linux.
+# Claude Code (native installer). Ghostty is optional: `install.sh ghostty`.
 
 # Shell & terminal
 brew "tmux"
@@ -35,3 +35,13 @@ brew "pandoc"
 brew "wget"
 brew "socat"
 brew "telnet"
+
+# Docker via Colima (configured by `install.sh docker`)
+brew "colima", restart_service: :changed
+brew "docker"
+brew "docker-buildx"
+brew "docker-compose"
+
+# Apps the setup relies on (Ghostty is optional: `install.sh ghostty`)
+cask "codex"
+cask "skim" # PDF viewer with SyncTeX for VimTeX

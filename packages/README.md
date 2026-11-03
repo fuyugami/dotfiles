@@ -5,9 +5,10 @@ install what is missing, so re-running is always safe.
 
 | File | Installed by | Format |
 | --- | --- | --- |
-| [`Brewfile`](Brewfile) | `make packages` (macOS + Linux) | Homebrew Bundle |
-| [`Brewfile.macos`](Brewfile.macos) | `make packages` (macOS only) | Homebrew Bundle |
-| [`apt.txt`](apt.txt), [`dnf.txt`](dnf.txt) | `make packages` (Linux, before Homebrew) | one distro package per line |
+| [`Brewfile`](Brewfile) | `make packages` (macOS only) | Homebrew Bundle |
+| [`apt.txt`](apt.txt) | `make packages` (Debian, Ubuntu) | one apt package per line |
+| [`dnf.txt`](dnf.txt) | `make packages` (Fedora) | one dnf package per line |
+| release binaries | `make tools` (Linux) | defined in [`setup/tools.sh`](../setup/tools.sh) |
 | [`npm.txt`](npm.txt) | `make node` | one npm package per line |
 | [`go.txt`](go.txt) | `make go` | one Go module path per line |
 | [`conda/*.yml`](conda/) | `make python` | conda environment files |
@@ -18,10 +19,11 @@ In the `.txt` lists, blank lines and `# comments` are ignored.
 
 1. **Language toolchain or a tool with its own official installer/updater** (Go, Node,
    Python, uv, Rust, Claude Code…) → its own step in [`setup/`](../setup/README.md), not
-   Homebrew. Same install on macOS and Linux, updates from the source.
-2. **CLI tool you want on every machine** → `Brewfile` (Homebrew ships prebuilt binaries
-   for macOS and Linux).
-3. **macOS app or macOS-only formula** → `Brewfile.macos`.
+   Homebrew or apt. Same install on macOS and Linux, updates from the source.
+2. **CLI tool you want on every machine** → the `Brewfile` (macOS) **and** `apt.txt` /
+   `dnf.txt` (Linux), same tool in each. If apt's version is too old or missing (Ubuntu LTS
+   often is), add it to the `tools` step instead of `apt.txt`.
+3. **macOS app or macOS-only formula** → `Brewfile`. Ghostty is optional: `make ghostty`.
 4. **Language-specific global tool you use everywhere** (language servers, package
    managers) → `npm.txt` or `go.txt`.
 5. **Python packages** → a conda env file (or `uv` inside a project).
@@ -54,21 +56,39 @@ brew "something-mac-only" if OS.mac?               # per-OS line in a shared Bre
 
 Shared groups: shell & terminal, editor tooling (Neovim, tree-sitter CLI, ripgrep, fd,
 language servers incl. texlab, stylua), code quality (pre-commit, shellcheck, golangci-lint),
-Kubernetes CLI and mkcert, docs & network (pandoc, wget, socat, telnet).
+Kubernetes CLI and mkcert, docs & network (pandoc, wget, socat).
 
-**macOS apps:** `Brewfile.macos` only lists apps the setup depends on (Ghostty, Codex, Skim) and
+**macOS apps:** the `Brewfile` lists only apps the setup depends on (Codex, Skim; Ghostty is
+optional: `make ghostty`) and
 the Docker runtime (Colima + Docker CLI). Add `cask "<name>"` for apps you want on every
 Mac; find names with `brew search <name>`, remove an app and its settings with
 `brew uninstall --zap --cask <name>`.
 
 ## Linux base packages
 
-`apt.txt` / `dnf.txt` are only the **bootstrap** packages: compilers, `curl`, `git`, `zsh`,
-`procps` and `file` (needed by Homebrew on Linux). Everything else comes from the shared
-`Brewfile`, so tool versions match macOS (distro packages are often too old, e.g. Neovim).
+`apt.txt` (Debian, Ubuntu) and `dnf.txt` (Fedora) hold the build tools and the CLI tools the
+setup expects. A package name the release does not carry is skipped with a warning, not an
+error (e.g. `fastfetch`, `texlab` on Ubuntu 24.04).
 
-- **Add a base package:** only what the rest of the setup needs; regular tools belong in
-  `Brewfile`.
+**Why not Homebrew on Linux?** Native packages are what Linux users expect and update with
+the system. The gap is old LTS versions, so the `tools` step installs official release
+binaries only where apt/dnf are missing or too old, checked against a version floor:
+
+| Tool | Floor | Why |
+| --- | --- | --- |
+| Neovim | 0.12 | the config targets it (Ubuntu 26.10 has 0.12 in apt; 26.04 has 0.11, 24.04 has 0.9) |
+| tree-sitter-cli | 0.26.1 | required by nvim-treesitter's `main` branch (apt: 26.10 has 0.26, 26.04 has 0.25) |
+| lua-language-server, stylua, golangci-lint, kubectl | any | not in Ubuntu's repos |
+| texlab | any | in Ubuntu 26.04's apt, otherwise downloaded |
+
+`apt.txt` lists Neovim and tree-sitter-cli as `name>=version`, so apt installs them only where
+its version meets the floor (Ubuntu 26.10) and `tools` downloads them everywhere else. Fedora's
+and Ubuntu 26.10's repos are current, so `tools` only fetches lua-language-server, stylua,
+golangci-lint and kubectl there. Downloads are verified
+against the sha256 GitHub publishes for each asset. Update them with `make update-tools`.
+
+- **Add a package:** one line in `apt.txt` (`name>=version` to require a minimum) and `dnf.txt` (names differ: `fd-find`,
+  `ShellCheck`, `pandoc-cli` on Fedora) plus the `Brewfile` for macOS.
 - **Another distro (e.g. Arch):** add `pacman.txt` and a `pacman` branch next to the
   `apt-get` / `dnf` ones in [`setup/packages.sh`](../setup/packages.sh).
 
@@ -91,7 +111,7 @@ not yet in `~/go/bin`.
   a trailing `/v2` is skipped).
 - The list always installs `@latest`. Tools a project needs at a fixed version go in that
   project: `go get -tool <module>@<version>`, run with `go tool <name>`.
-- golangci-lint comes from the Brewfile: its authors recommend a binary install over
+- golangci-lint comes from the Brewfile (macOS) or its release binary (Linux): its authors recommend a binary install over
   `go install`.
 - Update all: `make update-go` (also upgrades Go itself).
 - Remove: delete the line and `rm ~/go/bin/<tool>`.

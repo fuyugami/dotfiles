@@ -25,9 +25,10 @@ unset module
 
 [[ -r ~/.zshrc.local ]] && source ~/.zshrc.local
 
-# Powerlevel10k theme: Homebrew install first, legacy ~/powerlevel10k clone second.
+# Powerlevel10k theme: Homebrew (macOS), the Linux tools step's clone, legacy ~/powerlevel10k.
 for p10k_theme in \
     ${HOMEBREW_PREFIX:-/nonexistent}/share/powerlevel10k/powerlevel10k.zsh-theme \
+    ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme \
     ~/powerlevel10k/powerlevel10k.zsh-theme; do
   if [[ -r $p10k_theme ]]; then
     source "$p10k_theme"

@@ -10,7 +10,7 @@ if ! has claude && [ ! -x "$HOME/.local/bin/claude" ]; then
 fi
 ok "claude"
 
-# macOS gets Codex from the cask in packages/Brewfile.macos.
+# macOS gets Codex from the cask in packages/Brewfile.
 if [ "$OS" = linux ] && ! has codex; then
   load_nvm || die "nvm is missing: run ./install.sh node"
   info "npm install -g @openai/codex"

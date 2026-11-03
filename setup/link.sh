@@ -5,7 +5,8 @@ set -eo pipefail
 . "$(dirname "$0")/lib.sh"
 
 # Folded: Stow may link a whole directory (new files land in the repo).
-FOLDED=(nvim tmux ghostty zsh)
+# ghostty is just a config file: linked everywhere, used only where Ghostty is installed.
+FOLDED=(nvim tmux zsh ghostty)
 # Per-file: the target directory also holds machine-local files
 # (git/config.local, Claude state, other ~/.local/bin tools).
 PER_FILE=(git claude conda bin)

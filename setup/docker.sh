@@ -30,9 +30,10 @@ else
     curl -fsSL https://get.docker.com | sudo sh
   fi
   sudo systemctl enable --now docker >/dev/null 2>&1 || true
-  if ! id -nG "$USER" | grep -qw docker; then
-    sudo usermod -aG docker "$USER"
-    warn "added $USER to the docker group: log out and back in"
+  user="$(id -un)"
+  if ! id -nG "$user" | grep -qw docker; then
+    sudo usermod -aG docker "$user"
+    warn "added $user to the docker group: log out and back in"
   fi
   ok "docker engine"
 fi

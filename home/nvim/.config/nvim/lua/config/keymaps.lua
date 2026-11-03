@@ -122,16 +122,6 @@ map("x", "<S-Tab>", "<gv", {
 })
 
 -- ============================================
--- PROJECT EXPLORER
--- ============================================
-
-map("n", "<leader>e", function()
-	require("mini.files").open(vim.fn.getcwd(), true)
-end, {
-	desc = "Open project explorer",
-})
-
--- ============================================
 -- FUZZY FINDING (fzf-lua)
 -- ============================================
 

@@ -1,4 +1,10 @@
-# Fedora base packages (build tools + Homebrew on Linux prerequisites).
+# Fedora (dnf): build tools plus the CLI tools the setup expects.
+# One package per line. Fedora ships current Neovim and tree-sitter-cli; if one ever
+# falls below the version this setup needs, `install.sh tools` replaces it from the
+# official release. lua-language-server, stylua, golangci-lint (its dnf package pulls in a
+# system Go), texlab and kubectl also come from there.
+
+# Build tools and bootstrap
 gcc
 gcc-c++
 make
@@ -8,4 +14,28 @@ file
 git
 zsh
 unzip
+jq
 ca-certificates
+util-linux-user # chsh, for the shell step
+
+# Shell & terminal
+tmux
+stow
+fzf
+zoxide
+fastfetch
+
+# Editor tooling
+neovim
+tree-sitter-cli
+ripgrep
+fd-find
+
+# Code quality, docs and network
+ShellCheck
+pre-commit
+mkcert
+pandoc-cli
+wget2-wget
+socat
+telnet

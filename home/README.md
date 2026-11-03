@@ -190,8 +190,9 @@ first one; in other tabs `tmux attach` picks a session no tab shows yet.
 `.config/ghostty/config.ghostty` — theme Catppuccin Mocha, JetBrains Mono 13 (bundled with
 Ghostty, no font install needed), 75% background opacity, left Option as Alt, `Cmd+K`
 clearing the screen (also inside tmux), shell integration, large scrollback, desktop notifications from programs (used by Claude Code
-and Codex; on macOS allow Ghostty in System Settings → Notifications). macOS-only keys
-are ignored on Linux.
+and Codex; allow Ghostty in System Settings → Notifications). Ghostty is optional (`make ghostty` on macOS; on a Linux desktop install it from ghostty.org) and the config is
+linked on every machine, servers included, where it is simply unused. `ssh-terminfo,ssh-env` make `ssh` from
+Ghostty to a server without the `xterm-ghostty` terminfo (Ubuntu Server) work out of the box.
 
 Change any key and reload with `Cmd+Shift+,` (or restart Ghostty). List options with
 `ghostty +show-config --default --docs`, themes with `ghostty +list-themes`, fonts with

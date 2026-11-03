@@ -26,8 +26,8 @@ lazy-lock.json            pinned plugin commits
 | `treesitter.lua` | nvim-treesitter | parsers, highlighting, indent, folds |
 | `conform.lua` | conform.nvim | format on save |
 | `fzf-lua.lua` | fzf-lua | files, grep, buffers, help, git status |
-| `mini.lua` | mini.nvim | files explorer, surround, statusline, icons, completion |
-| `nvim-tree.lua` | nvim-tree | sidebar tree |
+| `mini.lua` | mini.nvim | surround, statusline, icons, completion |
+| `nvim-tree.lua` | nvim-tree | sidebar tree, opened on launch; replaces netrw |
 | `gitsigns.lua` | gitsigns.nvim | hunks, blame, staging |
 | `diffview.lua` | diffview.nvim | full diffs and file history |
 | `smart-splits.lua` | smart-splits.nvim + tmux backend | `Ctrl+h/j/k/l` across splits and tmux panes |
@@ -45,7 +45,7 @@ lazy-lock.json            pinned plugin commits
 | `Space j` / `Space k` | move line or selection down / up |
 | `Tab` / `Shift+Tab` (visual) | indent / outdent, keeping the selection |
 | `Space ff` `fa` `fg` `fb` `fh` | files / all files (incl. ignored) / grep / buffers / help |
-| `Space e` · `Space te` `tr` | mini.files · nvim-tree toggle / reveal current file |
+| `Space e` / `Space te` · `tr` | nvim-tree toggle (opens on launch for `nvim` / `nvim <dir>`) · reveal current file |
 | `Ctrl h/j/k/l` | move across splits and tmux panes |
 | `gd` `K` · `Space lr` `rn` `ca` | definition, hover · references, rename, code action |
 | `[d` `]d` · `Space ld` | previous/next diagnostic · line diagnostics |

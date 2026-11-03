@@ -26,9 +26,10 @@ fi
 conda="$prefix/bin/mamba"
 [ -x "$conda" ] || conda="$prefix/bin/conda"
 
+envs="$("$prefix/bin/conda" env list | awk '!/^#/ {print $1}')"
 for env_file in "$DOTFILES"/packages/conda/*.yml; do
   name="$(sed -n 's/^name: *//p' "$env_file")"
-  if "$prefix/bin/conda" env list | awk '{print $1}' | grep -qx "$name"; then
+  if printf '%s\n' "$envs" | grep -qx "$name"; then
     ok "conda env $name (exists; update with: conda env update -n $name -f $env_file)"
   else
     info "Creating conda env $name"

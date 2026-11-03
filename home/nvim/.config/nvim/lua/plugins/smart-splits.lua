@@ -11,7 +11,13 @@ return {
 			{ "smart-splits-nvim/backend-tmux", main = "smart-splits-backend-tmux", opts = {} },
 		},
 		opts = {
-			mux = { backend = "smart-splits-backend-tmux" },
+			mux = {
+				backend = "smart-splits-backend-tmux",
+				-- Outside tmux (plain Ghostty tab, git's editor) there is no
+				-- backend; just move between Neovim splits without warning.
+				-- A broken backend is still reported.
+				warn_if_unusable = false,
+			},
 			-- Keep in step with the tmux bindings (plain select-pane wraps).
 			move = { at_edge = "wrap" },
 		},

@@ -1,16 +1,17 @@
 # dotfiles
 
-My development environment for **macOS and Linux**: terminal, editor, languages, containers
-and AI agents, set up by one idempotent installer.
+My development environment for **macOS and Linux** (Ubuntu Server 26.10 and other Debian-family
+systems first, 26.04 LTS and 24.04 work too; Fedora as well): terminal, editor, languages, containers and AI agents, set up by
+one idempotent installer.
 
 | Area | Tools |
 | --- | --- |
-| Terminal | Ghostty · tmux · zsh + Powerlevel10k · fzf · zoxide |
+| Terminal | tmux · zsh + Powerlevel10k · fzf · zoxide; Ghostty (optional) |
 | Editor | Neovim 0.12 (lazy.nvim, native LSP, tree-sitter) |
 | Languages | Go · Node (nvm) + TypeScript · Python (Miniforge conda/mamba, uv) |
 | Writing | LaTeX: TeX Live (MacTeX), VimTeX + latexmk, texlab, Skim (macOS) / Zathura (Linux) |
 | Containers | Docker via Colima (macOS) or Docker Engine (Linux) |
-| AI agents | Claude Code · Codex, with desktop notifications through Ghostty |
+| AI agents | Claude Code · Codex, with desktop notifications through Ghostty (macOS) |
 
 ## Install
 
@@ -19,38 +20,53 @@ and AI agents, set up by one idempotent installer.
 ```sh
 xcode-select --install          # git, make, compilers (skip if installed)
 git clone <repo-url> ~/dotfiles && cd ~/dotfiles
-./install.sh                    # may ask for sudo and your git name/email
-./install.sh doctor             # verify
+make setup                      # dotfiles + core tools; may ask for sudo and your git name/email
+make install                    # optional: Go, TeX Live, Docker, agent CLIs (or pick: make latex)
+make doctor                     # verify
 ```
 
 **Linux** (Debian/Ubuntu or Fedora)
 
 ```sh
-sudo apt install -y git curl    # Fedora: sudo dnf install -y git curl
+sudo apt install -y git curl make   # Fedora: sudo dnf install -y git curl make
 git clone <repo-url> ~/dotfiles && cd ~/dotfiles
-./install.sh
-./install.sh doctor
+make setup
+make install                    # optional, or pick single steps
+make doctor
 ```
 
-Then open a new terminal and log in to the agents once (`claude`, `codex`). On Linux, also
-log out and back in (Docker group) and install Ghostty from your distro.
+`make <target>` is a thin wrapper: `./install.sh <target>` does the same and works on a
+machine without `make`.
 
-`./install.sh` runs these steps in order. Each only does what is missing, so re-running it
-is safe and repairs a machine. Run single steps with `./install.sh node go` or `make node go`.
+Then open a new terminal and log in to the agents once (`claude`, `codex`). On Linux, also
+log out and back in (Docker group). Ghostty is optional (`make ghostty` installs the macOS app; on a Linux desktop install it from ghostty.org). A server
+needs no terminal app: connect from Ghostty over SSH and its terminfo is copied over automatically.
+
+Steps come in two groups. **`setup`** (`make setup`) is what the dotfiles need: the configs
+linked, plus the tools the shell and Neovim config rely on. **`install`** (`make install`)
+re-links and adds the optional, heavier installs; it does not run setup, and warns when setup
+is missing. `./install.sh` with no arguments runs both. Each step only does what is missing,
+so re-running is safe and repairs a machine. Run single steps with `./install.sh node go` or
+`make node go`.
 
 | Step | Does |
 | --- | --- |
-| `packages` | Homebrew and the Brewfiles (Linux: apt/dnf base packages first) |
+| **setup** | |
+| `packages` | macOS: Homebrew and the Brewfile. Linux: apt (Debian, Ubuntu) or dnf (Fedora) packages |
 | `link` | Symlinks the configs in `home/` into `$HOME` |
 | `git` | Asks for your name/email, stores them in `~/.config/git/config.local` (not in the repo) |
 | `shell` | Makes zsh the login shell |
 | `tmux` | tmux plugins: resurrect + continuum, so sessions survive a reboot |
 | `node` | nvm, Node 24, global npm packages |
 | `python` | uv, Miniforge (conda/mamba), the `dev` conda env |
+| `tools` | Linux: what apt/dnf lack or ship too old (Neovim 0.12, tree-sitter-cli, lua-language-server, stylua, golangci-lint, kubectl) from official releases |
+| **install** | |
+| `link` | Re-links, so configs added since setup are in place |
 | `go` | Official Go in `/usr/local/go`, Go tools |
 | `latex` | TeX Live if missing (MacTeX on macOS), Skim set up to sync with Neovim |
 | `docker` | macOS: Colima VM started at login; Linux: Docker Engine |
 | `agents` | Claude Code and Codex CLIs, a starting Codex config |
+| `ghostty` | optional: the Ghostty app (macOS cask; Linux desktops install it themselves). Its config is linked everywhere |
 
 ## How it works
 
@@ -59,8 +75,9 @@ is safe and repairs a machine. Run single steps with `./install.sh node go` or `
   at their usual paths; you are editing this repo. Existing files are moved to
   `~/.dotfiles-backup/` before linking.
 - **Same setup on both systems.** Language toolchains come from their official installers
-  (Go, nvm, Miniforge, uv, Claude Code); other CLI tools from Homebrew, which ships prebuilt
-  binaries for macOS and Linux. OS differences are handled inside the configs.
+  (Go, nvm, Miniforge, uv, Claude Code); other CLI tools from Homebrew on macOS and from
+  apt/dnf on Linux, with official release binaries where the distro is too old (Neovim,
+  tree-sitter). OS differences are handled inside the configs.
 - **Workspaces survive a reboot.** tmux saves every session, window, pane and directory
   every 10 minutes. After a reboot, run `tmux` once: it restores them and reruns Neovim,
   `claude --continue` and `codex resume --last` in their panes. Attach other tabs with
@@ -74,7 +91,7 @@ is safe and repairs a machine. Run single steps with `./install.sh node go` or `
 
 ```
 home/        configs, one folder per tool (zsh, git, tmux, ghostty, nvim, conda, claude, bin)
-packages/    what gets installed: Brewfiles (shared, macOS), Linux base packages, npm, Go, conda
+packages/    what gets installed: Brewfile (macOS), apt/dnf lists (Linux), npm, Go, conda
 setup/       one script per install step, plus templates copied once (Codex config)
 ```
 
@@ -87,10 +104,10 @@ setup/       one script per install step, plus templates copied once (Codex conf
 | Command | Does |
 | --- | --- |
 | `make doctor` | Check that configs are linked and tools are installed |
-| `make update` | Update everything: Homebrew, npm globals, Go and its tools, uv, conda envs, Neovim plugins |
+| `make update` | Update everything: Homebrew or apt/dnf, release-binary tools, npm globals, Go and its tools, uv, conda envs, Neovim plugins |
 | `make <step>` | Run one install step again, e.g. after editing a package list |
-| `make check` | Show packages from the Brewfiles that aren't installed yet |
-| `make brew-cleanup` | Show installed Homebrew packages that aren't in a Brewfile |
+| `make check` | macOS: show Brewfile entries that aren't installed yet |
+| `make brew-cleanup` | macOS: show installed Homebrew packages that aren't in the Brewfile |
 | `make tmux-reload` | Reload the tmux config |
 | `make lint` | Check scripts and configs for syntax errors |
 | `make unlink` | Remove all config symlinks |
@@ -130,7 +147,7 @@ Full list: [Neovim guide](home/nvim/.config/nvim/README.md).
 
 | To change | Edit | Guide |
 | --- | --- | --- |
-| CLI tools and apps | `packages/Brewfile`, `Brewfile.macos` | [packages](packages/README.md) |
+| CLI tools and apps | `packages/Brewfile` (macOS), `apt.txt` / `dnf.txt` (Linux) | [packages](packages/README.md) |
 | npm / Go tools, Python envs | `packages/npm.txt`, `go.txt`, `conda/*.yml` | [packages](packages/README.md) |
 | Shell aliases, PATH, prompt | `home/zsh/…`, `~/.zshrc.local` | [home → zsh](home/README.md#zsh) |
 | git defaults and identity | `home/git/…`, `~/.config/git/config.local` | [home → git](home/README.md#git) |
@@ -139,7 +156,7 @@ Full list: [Neovim guide](home/nvim/.config/nvim/README.md).
 | Neovim plugins, languages | `home/nvim/.config/nvim/lua/…` | [Neovim](home/nvim/.config/nvim/README.md#customize) |
 | Claude Code / Codex settings | `home/claude/…`, `~/.codex/config.toml` | [home → Claude](home/README.md#claude-code) |
 | Install steps, Node version, Docker VM size | `setup/*.sh` | [setup](setup/README.md) |
-| macOS / Linux differences, Colima | `setup/`, `packages/Brewfile.macos`, `apt.txt` | [setup → macOS and Linux](setup/README.md#macos-and-linux) |
+| macOS / Linux differences, Colima | `setup/`, `packages/Brewfile`, `apt.txt` | [setup → macOS and Linux](setup/README.md#macos-and-linux) |
 
 ## Troubleshooting
 

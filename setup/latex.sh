@@ -1,18 +1,24 @@
 #!/usr/bin/env bash
-# Step: LaTeX. TeX Live when latexmk is missing (macOS: MacTeX, Linux: Homebrew's
-# texlive), then Skim's sync with Neovim (macOS). texlab and Skim come from the Brewfiles.
+# Step: LaTeX. TeX Live when latexmk is missing (macOS: MacTeX, Linux: apt/dnf
+# TeX Live packages), then Skim's sync with Neovim (macOS). texlab and Skim come from the Brewfiles.
 set -eo pipefail
 . "$(dirname "$0")/lib.sh"
-load_brew || die "Homebrew is missing: run ./install.sh packages"
+[ "$OS" != macos ] || load_brew || die "Homebrew is missing: run ./install.sh packages"
 
 if has latexmk || [ -x /Library/TeX/texbin/latexmk ]; then
   ok "TeX Live already installed"
 elif [ "$OS" = macos ]; then
   info "Installing MacTeX (TeX Live, about 6 GB; asks for your password)"
   brew install --cask mactex-no-gui
+elif has apt-get; then
+  info "Installing TeX Live (apt)"
+  sudo apt-get install -y -q latexmk biber texlive-latex-recommended texlive-latex-extra \
+    texlive-fonts-recommended texlive-bibtex-extra texlive-science
+elif has dnf; then
+  info "Installing TeX Live (dnf)"
+  sudo dnf install -y latexmk biber texlive-scheme-medium
 else
-  info "Installing TeX Live (Homebrew)"
-  brew install texlive
+  die "unsupported system: install TeX Live (latexmk) yourself"
 fi
 
 if [ "$OS" = macos ]; then
