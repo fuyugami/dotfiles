@@ -12,7 +12,7 @@
       "Bash(docker info:*)"
     ]
   },
-  "model": "opus",
+  "model": "fable",
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
@@ -26,8 +26,12 @@
     },
     "claude-sonnet-5-5": {
       "effortLevel": "medium"
+    },
+    "claude-fable-5-2": {
+      "effortLevel": "high"
     }
   },
+  "autoMemoryEnabled": false,
   "theme": "dark",
   "editorMode": "normal",
   "preferredNotifChannel": "ghostty"
