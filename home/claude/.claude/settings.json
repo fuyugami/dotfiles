@@ -12,7 +12,7 @@
       "Bash(docker info:*)"
     ]
   },
-  "model": "fable",
+  "model": "sonnet",
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
@@ -32,7 +32,7 @@
     }
   },
   "autoMemoryEnabled": false,
-  "theme": "dark",
+  "theme": "auto",
   "editorMode": "normal",
   "preferredNotifChannel": "ghostty"
 }

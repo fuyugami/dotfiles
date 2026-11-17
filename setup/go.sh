@@ -8,8 +8,9 @@ set -eo pipefail
 GOROOT_DIR=/usr/local/go
 
 install_go() {
-  local version os arch file sha tmp
-  version="$(curl -fsSL 'https://go.dev/VERSION?m=text' | head -n 1)"
+  local version os arch file sha tmp releases
+  # sed reads to EOF; `head -n 1` closes the pipe early and curl exits 23 under pipefail.
+  version="$(curl -fsSL 'https://go.dev/VERSION?m=text' | sed -n 1p)"
   if [ -x "$GOROOT_DIR/bin/go" ] && [ "$("$GOROOT_DIR/bin/go" env GOVERSION)" = "$version" ]; then
     ok "$version is current"
     return
@@ -22,7 +23,8 @@ install_go() {
     *) die "unsupported CPU: $(uname -m)" ;;
   esac
   file="$version.$os-$arch.tar.gz"
-  sha="$(curl -fsSL 'https://go.dev/dl/?mode=json' |
+  releases="$(curl -fsSL 'https://go.dev/dl/?mode=json')"
+  sha="$(printf '%s\n' "$releases" |
     awk -v f="\"$file\"" '$2 == f "," {found = 1} found && $1 == "\"sha256\":" {gsub(/[",]/, "", $2); print $2; exit}')"
   [ -n "$sha" ] || die "no checksum published for $file"
 
